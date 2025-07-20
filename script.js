@@ -3,6 +3,7 @@
 const form = document.getElementById('employee-form');
 const nameInput = document.getElementById('name');
 const roleInput = document.getElementById('role');
+const salaryInput = document.getElementById('salary');
 const statusInput = document.getElementById('status');
 const tableBody = document.querySelector('#employee-table-body');
 const trashBody = document.querySelector('#trash-table-body');
@@ -20,9 +21,10 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = nameInput.value.trim();
   const role = roleInput.value.trim();
+  const salary = salaryInput.value.trim();
   const status = statusInput.value;
 
-  if (!name || !role || !status) {
+  if (!name || !role || !status || !salary) {
     alert('Please fill in all fields!');
     return;
   }
@@ -31,13 +33,17 @@ form.addEventListener('submit', (e) => {
     alert('Name and Role must be at least 4 characters long.');
     return;
   }
+      const hasNumbers = /\d/; 
+    if(!hasNumbers.test(salary)){
 
-    const hasNumbers = /\d/; 
+ alert('Name and Role must  contain numbers only.');
+    }
+    // const hasNumbers = /\d/; 
   if (hasNumbers.test(name) || hasNumbers.test(role)) {
     alert('Name and Role must not contain numbers.');
     return;
   }
-  employees.push({ id: Date.now(), name, role, status });
+  employees.push({ id: Date.now(), name, role,salary, status });
   renderEmployees();
   form.reset();
 });
@@ -52,6 +58,7 @@ function renderEmployees() {
     tr.innerHTML = `
       <td>${emp.name}</td>
       <td>${emp.role}</td>
+       <td>${emp.salary}</td>
       <td><span class="badge ${emp.status}">${emp.status}</span></td>
       <td>
        <button class="edit-btn" onclick="editEmployee(${emp.id})">Edit</button>
@@ -76,10 +83,11 @@ function editEmployee(id) {
   const emp = employees.find(e => e.id === id);
   const newName = prompt('Edit Name:', emp.name);
   const newRole = prompt('Edit Role:', emp.role);
-
-  if (newName && newRole) {
+  const newSalary = prompt('Edit salary:', emp.salary);
+  if (newName && newRole &&newSalary) {
     emp.name = newName;
     emp.role = newRole;
+    emp.salary = newSalary;
     renderEmployees();
   }
 }
