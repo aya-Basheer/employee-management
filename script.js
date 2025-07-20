@@ -11,11 +11,11 @@ const trashSection = document.getElementById('trash-section');
 // const mainCount = document.getElementById('main-count');
 const trashCount = document.getElementById('trash-count');
 console.log(showTrashBtn);
-// مصفوفات لتخزين البيانات
+//array for store employee
 let employees = [];
 let trash = [];
 
-// معالجة إدخال جديد
+// proccess new input
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const name = nameInput.value.trim();
@@ -27,12 +27,22 @@ form.addEventListener('submit', (e) => {
     return;
   }
 
+    if (name.length < 4 || role.length < 4) {
+    alert('Name and Role must be at least 4 characters long.');
+    return;
+  }
+
+    const hasNumbers = /\d/; 
+  if (hasNumbers.test(name) || hasNumbers.test(role)) {
+    alert('Name and Role must not contain numbers.');
+    return;
+  }
   employees.push({ id: Date.now(), name, role, status });
   renderEmployees();
   form.reset();
 });
 
-// عرض الموظفين الرئيسيين
+
 function renderEmployees() {
   tableBody.innerHTML = '';
   // mainCount.innerText = employees.length;
@@ -44,14 +54,13 @@ function renderEmployees() {
       <td>${emp.role}</td>
       <td><span class="badge ${emp.status}">${emp.status}</span></td>
       <td>
-        <button onclick="editEmployee(${emp.id})">Edit</button>
-        <button onclick="deleteEmployee(${emp.id})">Delete</button>
-      </td>`;
+       <button class="edit-btn" onclick="editEmployee(${emp.id})">Edit</button>
+  <button class="delete-btn" onclick="deleteEmployee(${emp.id})">Delete</button>`;
     tableBody.appendChild(tr);
   });
 }
 
-// نقل إلى سلة المهملات
+//store in trash
 function deleteEmployee(id) {
   const emp = employees.find(e => e.id === id);
   if (confirm(`Move ${emp.name} to trash?`)) {
@@ -62,7 +71,7 @@ function deleteEmployee(id) {
   }
 }
 
-// تعديل بيانات موظف
+// Modify employee data
 function editEmployee(id) {
   const emp = employees.find(e => e.id === id);
   const newName = prompt('Edit Name:', emp.name);
@@ -75,7 +84,7 @@ function editEmployee(id) {
   }
 }
 
-// عرض سلة المهملات
+// display trash
 function renderTrash() {
   trashBody.innerHTML = '';
   trashCount.textContent = trash.length;
@@ -87,14 +96,14 @@ function renderTrash() {
       <td>${emp.role}</td>
       <td><span class="badge ${emp.status}">${emp.status}</span></td>
       <td>
-        <button onclick="restoreEmployee(${emp.id})">Restore</button>
-        <button onclick="permanentlyDelete(${emp.id})">Delete Forever</button>
+        <button class="edit-btn" onclick="restoreEmployee(${emp.id})">Restore</button>
+        <button class="delete-btn" onclick="permanentlyDelete(${emp.id})">Delete Forever</button>
       </td>`;
     trashBody.appendChild(tr);
   });
 }
 
-// استرجاع موظف من سلة المهملات
+// 
 function restoreEmployee(id) {
   const emp = trash.find(e => e.id === id);
   employees.push(emp);
@@ -103,7 +112,7 @@ function restoreEmployee(id) {
   renderTrash();
 }
 
-// حذف نهائي
+// permanently Delete
 function permanentlyDelete(id) {
   if (confirm('Permanently delete this employee?')) {
     trash = trash.filter(e => e.id !== id);
@@ -111,12 +120,12 @@ function permanentlyDelete(id) {
   }
 }
 
-// عرض/إخفاء سلة المهملات
+
 showTrashBtn.addEventListener('click', () => {
   trashSection.classList.toggle('hidden');
 });
 
-// قياس أداء العرض
+// scale performance
 console.time('render');
 renderEmployees();
 console.timeEnd('render');
