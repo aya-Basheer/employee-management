@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employee Management Dashboard</title>
+  <link rel="stylesheet" href="CSS/style.css" />
+    <link rel="stylesheet" href="CSS/normlize.css" />
+      <link rel="stylesheet" href="CSS/all.min.css" />
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Employee Management Dashboard</h1>
+    </header>
+
+
+
+      <section id="employee-form" aria-labelledby="form-title">
+      <h2 id="form-title">Add New Employee</h2>
+      <form id="employee-form" autocomplete="on">
+    
+        <label for="name">Name</label>
+        <input type="text" id="name"  />
+
+        <label for="role">Role</label>
+        <input type="text" id="role"/>
+
+        <label for="status">Status</label>
+        <select id="status" >
+          <option value="">Select</option>
+          <option value="Active">Active</option>
+          <option value="On Leave">On Leave</option>
+          <option value="Terminated">Terminated</option>
+        </select>
+
+        <button type="submit" id="add-btn">Add Employee</button>
+      </form>
+    </section>
+
+    <!--display employee-->
+    <section id="employee-list-section" >
+      <button id="show-trash-btn">Show Trash (<span id="trash-count">0</span>)</button>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="employee-table-body"></tbody>
+      </table>
+    </section>
+
+    <!-- trash section-->
+    <section id="trash-section" class="hidden" >
+      <h2>Trash</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="trash-table-body"></tbody>
+      </table>
+    </section>
+  </main>
+
+
+
+    <footer>
+    <div class=" footer-containers">
+       
+
+<p>We Are Social</p>
+<div class="social-icons">
+    <i class="fab fa-facebook-f"></i>
+    <i class="fab fa-twitter"></i>
+    <i class="fas fa-home"></i>
+    <i class="fab fa-linkedin"></i>
+</div>
+<p class="copyright">&copy;2021  All Right Reserved</p>
+    </div>
+</div>
+</footer>
+<!--End footer-->
+
+  <script src="script.js"> 
+  
+  </script>
+</body>
+</html>
